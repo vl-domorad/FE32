@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, ReactElement } from "react";
 import classnames from "classnames";
 
 //@ts-ignore
@@ -17,7 +17,7 @@ export enum ButtonTypes {
 // !!{} -> !!true -> !false -> true
 
 type ButtonProps = {
-  title: string;
+  title: string | ReactElement;
   type: ButtonTypes;
   onClick: () => void;
   className?: string;
