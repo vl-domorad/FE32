@@ -19,13 +19,19 @@ export enum ButtonTypes {
 type ButtonProps = {
   title: string | ReactElement;
   type: ButtonTypes;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
   disabled?: boolean;
+  onDefaultClick: () => void
 };
 
+export const withDefaultOnClick = (Component: any) => {
+  return (props: any) => <Component {...props} onDefaultClick={() => alert('From HOC')}  />
+}
+
+
 const Button: FC<ButtonProps> = (props) => {
-  const { type, title, onClick, className, disabled } = props;
+  const { type, title, onClick, className, disabled, onDefaultClick } = props;
 
   const buttonClassName = styles[type];
 
@@ -34,11 +40,11 @@ const Button: FC<ButtonProps> = (props) => {
       className={classnames(styles.button, buttonClassName, className, {
         [styles.disabled]: !!disabled,
       })}
-      onClick={onClick}
+      onClick={onClick ? onClick : onDefaultClick}
     >
       {title}
     </div>
   );
 };
 
-export default Button;
+export default withDefaultOnClick(Button);

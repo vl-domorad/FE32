@@ -10,6 +10,7 @@ type InputProps = {
   disabled?: boolean;
   title?: string;
   error?: string;
+  onDefaultClick?: () => void;
 };
 
 const Input: FC<InputProps> = ({
@@ -19,6 +20,7 @@ const Input: FC<InputProps> = ({
   disabled,
   title,
   error,
+  onDefaultClick,
 }) => {
   const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
@@ -32,6 +34,7 @@ const Input: FC<InputProps> = ({
         onChange={onChangeInput}
         placeholder={placeholder}
         disabled={disabled}
+        onClick={onDefaultClick}
       />
       {error && <div>{error}</div>}
     </div>
