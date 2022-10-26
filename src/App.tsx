@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 //@ts-ignore
 import styles from "./App.module.css";
@@ -6,6 +6,7 @@ import styles from "./App.module.css";
 // import SignUp from "./Pages/SignUp";
 import Card from "./Components/Card";
 import { CardSize } from "./Components/Card/Card";
+import CardsList from "./Components/CardsList";
 
 const MOCK_CARD = {
   id: 0,
@@ -33,9 +34,12 @@ const MOCK_CARDS_LIST = [
 ];
 
 const App = () => {
+  const [cardsList, setCardsList] = useState(null)
+
   return (
     <div className={styles.container}>
-      <Card card={MOCK_CARD} size={CardSize.Small} />
+      {/*<Card card={MOCK_CARD} size={CardSize.Small} />*/}
+      <CardsList cardsList={MOCK_CARDS_LIST} />
     </div>
   );
 };

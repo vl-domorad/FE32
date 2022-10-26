@@ -8,4 +8,4 @@ export type CardType = {
   author: number;
 };
 
-export type CardsList = Array<CardType>;
+export type CardsListType = Array<CardType>;
