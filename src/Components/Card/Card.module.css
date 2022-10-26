@@ -1,0 +1,98 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 756px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #dadada;
+  flex: 1;
+  height: 100%;
+  max-height: 452px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+}
+.iconsContainer {
+  display: flex;
+  gap: 24px;
+}
+.bodyContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.image {
+  width: 256px;
+  height: 254px;
+}
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.headerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 44px;
+  color: #313037;
+}
+
+.title:hover {
+  cursor: pointer;
+  color: #2231aa;
+}
+
+.description {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+  color: #8d8e97;
+}
+.date {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8d8e97;
+}
+.iconButton {
+  display: flex;
+}
+.iconButton:hover {
+  cursor: pointer;
+}
+
+.mediumContainer {
+  max-width: 352px;
+}
+.mediumBodyContainer {
+  flex-direction: column-reverse;
+  gap: 24px;
+}
+.mediumImage {
+  max-width: 100%;
+  width: 100%;
+  height: 246px;
+}
+
+
+.smallTitle {
+  font-size: 18px;
+  line-height: 28px;
+}
+.smallContainer {
+  max-width: 352px;
+  max-height: 206px;
+}
+.smallBodyContainer {
+  flex-direction: row;
+}
+.smallImage {
+  width: 96px;
+  height: 96px;
+}
