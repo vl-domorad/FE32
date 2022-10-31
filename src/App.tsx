@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 //@ts-ignore
 import styles from "./App.module.css";
-// import SignIn from "./Pages/SignIn";
+import SignIn from "./Pages/SignIn";
 // import SignUp from "./Pages/SignUp";
 import Card from "./Components/Card";
 import { CardSize } from "./Components/Card/Card";
@@ -38,8 +38,7 @@ const App = () => {
 
   return (
     <div className={styles.container}>
-      {/*<Card card={MOCK_CARD} size={CardSize.Small} />*/}
-      <CardsList cardsList={MOCK_CARDS_LIST} />
+      <SignIn />
     </div>
   );
 };
