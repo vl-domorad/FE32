@@ -9,3 +9,8 @@ export type CardType = {
 };
 
 export type CardsListType = Array<CardType>;
+
+export enum Theme {
+  Light = 'light',
+  Dark = 'dark'
+}

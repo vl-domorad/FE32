@@ -1,12 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 //@ts-ignore
 import styles from "./App.module.css";
 import SignIn from "./Pages/SignIn";
 // import SignUp from "./Pages/SignUp";
-import Card from "./Components/Card";
-import { CardSize } from "./Components/Card/Card";
-import CardsList from "./Components/CardsList";
+// import Card from "./Components/Card";
+// import { CardSize } from "./Components/Card/Card";
+// import CardsList from "./Components/CardsList";
+import ThemeProvider from "./Context/Theme";
+import { Theme } from "./Constants/@types";
+import ThemeSwitcher from "./Components/ThemeSwitcher";
 
 const MOCK_CARD = {
   id: 0,
@@ -34,12 +37,21 @@ const MOCK_CARDS_LIST = [
 ];
 
 const App = () => {
-  const [cardsList, setCardsList] = useState(null)
+  const [cardsList, setCardsList] = useState(null);
+
+  const [theme, setTheme] = useState(Theme.Dark);
+
+  const onChangeTheme = (value: Theme) => {
+    setTheme(value);
+  };
 
   return (
-    <div className={styles.container}>
-      <SignIn />
-    </div>
+    <ThemeProvider theme={theme} onChangeTheme={onChangeTheme}>
+      <div className={styles.container}>
+        <ThemeSwitcher />
+        <SignIn />
+      </div>
+    </ThemeProvider>
   );
 };
 

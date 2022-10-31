@@ -1,0 +1,24 @@
+.container {
+  border: 1px solid #e8e8e8;
+  display: flex;
+}
+.iconButton {
+  flex: 1;
+  padding: 28px 46px;
+  box-sizing: border-box;
+}
+
+.iconButton:hover {
+  cursor: pointer;
+}
+.iconButton:hover svg > path {
+  fill: #2231aa;
+}
+
+.iconButton:first-child {
+  border-right: 1px solid #e8e8e8;
+}
+
+.activeButton svg > path {
+  fill: #313037;
+}

@@ -26,7 +26,7 @@ const SignIn = () => {
             title={"Email"}
             placeholder={"Your email"}
             value={login}
-            onChange={(event: any) => setLogin(event.target.value)}
+            onChange={(value: string) => setLogin(value)}
             ref={inputRef}
           />
           <Input
