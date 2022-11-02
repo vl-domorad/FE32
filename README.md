@@ -16,3 +16,5 @@ export { default, ButtonTypes } from "./Button"; //экспортировать 
 import Button, { ButtonTypes } from "./Button"; // полностью эквивалентно строке 2 варианту
 export ButtonTypes
 export default Button
+
+Разница у NavLink и Link - у NavLink есть возможность прокинуть className - т.е. NavLink кастомизируемый

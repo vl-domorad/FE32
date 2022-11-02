@@ -1,0 +1,39 @@
+.container {
+  position: absolute;
+  left: 0;
+  top: 84px;
+  bottom: 0;
+  height: calc(100vh - 84px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #ffffff;
+}
+.footerButton {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+.navButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 30px;
+  padding-bottom: 30px;
+
+  border-bottom: 1px solid #e8e8e8;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #313037;
+}
+.navButton:hover {
+  color: #2231aa;
+}
+
+.activeNavButton {
+  color: #2231aa;
+}
