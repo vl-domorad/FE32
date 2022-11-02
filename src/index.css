@@ -8,10 +8,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 html {
   flex: 1;
   height: 100%;
+  overflow: hidden;
 }
 
 code {

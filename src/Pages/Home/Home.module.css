@@ -1,0 +1,13 @@
+.container {
+  flex: 1;
+  height: 100%;
+  margin: 0 auto;
+}
+.pageTitle {
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 80px;
+
+  color: #313037;
+  margin-bottom: 40px;
+}
