@@ -10,13 +10,15 @@ import { Theme } from "../../Constants/@types";
 const ThemeSwitcher = () => {
   const { theme, onChangeTheme } = useThemeContext();
 
+  const onThemeClick = (value: Theme)  => () => onChangeTheme(value) //пример использования каррирования
+
   return (
     <div className={styles.container}>
       <div
         className={classNames(styles.iconButton, {
           [styles.activeButton]: theme === Theme.Light,
         })}
-        onClick={() => onChangeTheme(Theme.Light)}
+        onClick={onThemeClick(Theme.Light)}
       >
         <SunIcon />
       </div>
@@ -24,7 +26,7 @@ const ThemeSwitcher = () => {
         className={classNames(styles.iconButton, {
           [styles.activeButton]: theme === Theme.Dark,
         })}
-        onClick={() => onChangeTheme(Theme.Dark)}
+        onClick={onThemeClick(Theme.Dark)}
       >
         <MoonIcon />
       </div>
