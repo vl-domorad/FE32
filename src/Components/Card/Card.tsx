@@ -10,6 +10,8 @@ import {
 //@ts-ignore
 import styles from "./Card.module.css";
 import classNames from "classnames";
+import { useDispatch } from "react-redux";
+import { setSelectedPost } from "../../Redux/Reducers/postsReducer";
 
 export enum CardSize {
   Large = "large",
@@ -25,9 +27,15 @@ type CardProps = {
 const Card: FC<CardProps> = ({ card, size }) => {
   const { title, text, image, date } = card;
 
+  const dispatch = useDispatch();
+
   const isLarge = size === CardSize.Large;
   const isMedium = size === CardSize.Medium;
   const isSmall = size === CardSize.Small;
+
+  const onSettingClick = () => {
+    dispatch(setSelectedPost(card));
+  };
 
   return (
     <div
@@ -77,7 +85,7 @@ const Card: FC<CardProps> = ({ card, size }) => {
           <div className={styles.iconButton}>
             <BookmarkIcon />
           </div>
-          <div className={styles.iconButton}>
+          <div className={styles.iconButton} onClick={onSettingClick}>
             <SettingsIcon />
           </div>
         </div>
