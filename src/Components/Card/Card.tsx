@@ -1,17 +1,20 @@
 import React, { FC } from "react";
+import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
 
-import { CardType } from "../../Constants/@types";
+import { CardType, LikeStatus } from "../../Constants/@types";
 import {
   BookmarkIcon,
   DislikeIcon,
   LikeIcon,
   SettingsIcon,
 } from "../../Assets";
-//@ts-ignore
 import styles from "./Card.module.css";
-import classNames from "classnames";
-import { useDispatch } from "react-redux";
-import { setSelectedPost } from "../../Redux/Reducers/postsReducer";
+import {
+  setLikeStatus,
+  setSelectedPost,
+} from "../../Redux/Reducers/postsReducer";
+import PostsSelectors from "../../Redux/Selectors/postsSelectors";
 
 export enum CardSize {
   Large = "large",
@@ -29,12 +32,22 @@ const Card: FC<CardProps> = ({ card, size }) => {
 
   const dispatch = useDispatch();
 
+  const likedPosts = useSelector(PostsSelectors.getLikedPosts);
+  const dislikedPosts = useSelector(PostsSelectors.getDislikedPosts);
+  const isLiked = likedPosts.findIndex((post) => post.id === card.id) > -1;
+  const isDisliked =
+    dislikedPosts.findIndex((post) => post.id === card.id) > -1;
+
   const isLarge = size === CardSize.Large;
   const isMedium = size === CardSize.Medium;
   const isSmall = size === CardSize.Small;
 
   const onSettingClick = () => {
     dispatch(setSelectedPost(card));
+  };
+
+  const onStatusClick = (likeStatus: LikeStatus) => () => {
+    dispatch(setLikeStatus({ card, likeStatus }));
   };
 
   return (
@@ -74,11 +87,17 @@ const Card: FC<CardProps> = ({ card, size }) => {
       </div>
       <div className={styles.cardFooter}>
         <div className={styles.iconsContainer}>
-          <div className={styles.iconButton}>
-            <LikeIcon />
+          <div
+            className={styles.iconButton}
+            onClick={onStatusClick(LikeStatus.Like)}
+          >
+            <LikeIcon /> {isLiked && " 1"}
           </div>
-          <div className={styles.iconButton}>
-            <DislikeIcon />
+          <div
+            className={styles.iconButton}
+            onClick={onStatusClick(LikeStatus.Dislike)}
+          >
+            <DislikeIcon /> {isDisliked && " 1"}
           </div>
         </div>
         <div className={styles.iconsContainer}>
