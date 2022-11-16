@@ -6,5 +6,5 @@ export default {
     state.postsReducer.isSelectedPostModalOpened,
   getLikedPosts: (state: RootState) => state.postsReducer.likedPosts,
   getDislikedPosts: (state: RootState) => state.postsReducer.dislikedPosts,
-  getSavePosts: (state: RootState) => state.postsReducer.savedPosts,
+  getSavedPosts: (state: RootState) => state.postsReducer.savedPosts,
 };

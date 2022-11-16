@@ -11,8 +11,7 @@ type CardsListProps = {
 };
 
 const CardsList: FC<CardsListProps> = ({ cardsList }) => {
-
-  return (
+  return cardsList && cardsList.length > 0 ? (
     <div className={styles.container}>
       <div className={styles.leftSide}>
         <Card card={cardsList[0]} size={CardSize.Large} />
@@ -32,7 +31,7 @@ const CardsList: FC<CardsListProps> = ({ cardsList }) => {
         })}
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default CardsList;

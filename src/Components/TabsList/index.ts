@@ -1,1 +1,1 @@
-export {} // TODO: удалить когда будете писать ДЗ
+export { default } from './TabsList';

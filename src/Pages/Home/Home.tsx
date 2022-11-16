@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 import CardsList from "../../Components/CardsList";
-import styles from "./Home.module.css";
 import SelectedPostModal from "./SelectedPostModal";
+import TabsList from "../../Components/TabsList";
+import PostsSelectors from "../../Redux/Selectors/postsSelectors";
+import { Tabs } from "../../Constants/@types";
+import styles from "./Home.module.css";
 
 const MOCK_CARDS_LIST = [
   {
@@ -118,11 +122,29 @@ const MOCK_CARDS_LIST = [
 ];
 
 const Home = () => {
+  const [activeTab, setActiveTab] = useState(Tabs.All);
+  const onTabClick = (tab: Tabs) => {
+    setActiveTab(tab);
+  };
+
+  const likedPosts = useSelector(PostsSelectors.getLikedPosts);
+  const savedPosts = useSelector(PostsSelectors.getSavedPosts);
+
+  const cardsArray = () => {
+    if (activeTab === Tabs.Popular) {
+      return likedPosts;
+    } else if (activeTab === Tabs.Favourites) {
+      return savedPosts;
+    } else {
+      return MOCK_CARDS_LIST;
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.pageTitle}>{"Blog"}</div>
-      {/*<TabsList /> TODO - вставить компонент табин*/}
-      <CardsList cardsList={MOCK_CARDS_LIST} />
+      <TabsList activeTab={activeTab} onSelectTab={onTabClick} />
+      <CardsList cardsList={cardsArray()} />
       <SelectedPostModal />
     </div>
   );
