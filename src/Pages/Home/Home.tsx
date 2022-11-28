@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useSelector } from "react-redux";
 
 import CardsList from "../../Components/CardsList";
@@ -139,6 +139,10 @@ const Home = () => {
       return MOCK_CARDS_LIST;
     }
   };
+
+  useEffect(() => {
+    //ToDo: вместо того экшена, который засовывает посты мокнутые вызвать тот, который их получает из сервера
+  }, [])
 
   return (
     <div className={styles.container}>

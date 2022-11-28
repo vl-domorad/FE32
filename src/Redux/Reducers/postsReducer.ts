@@ -91,11 +91,19 @@ const postsSlice = createSlice({
       //   }
       // }
     },
+    //ToDo: дописать типы вместо any
+    getPosts: (state, action: PayloadAction<any>) => {},
+    setPosts: (state, action: PayloadAction<any>) => {},
   },
 });
 
-export const { setSelectedPost, setSelectedPostModalVisible, setLikeStatus } =
-  postsSlice.actions;
+export const {
+  setSelectedPost,
+  setSelectedPostModalVisible,
+  setLikeStatus,
+  getPosts,
+  setPosts,
+} = postsSlice.actions;
 
 const postsReducer = postsSlice.reducer;
 export default postsReducer;
