@@ -1,17 +1,34 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import FormContainer from "../../Components/FormContainer";
 import Input from "../../Components/Input";
 import Button, { ButtonTypes } from "../../Components/Button";
 import { PathNames } from "../Router/Router";
 import styles from "./SignUp.module.css";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../Redux/Reducers/authReducer";
 
 const SignIn = () => {
   const [name, setName] = useState("");
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const onSignUp = () => {
+    dispatch(
+      registerUser({
+        data: { username: name, password, email: login },
+        callback: () =>
+          navigate(PathNames.RegistrationConfirmation, {
+            state: { email: login },
+          }),
+      })
+    );
+  };
 
   return (
     <FormContainer title={"Sign Up"}>
@@ -45,7 +62,7 @@ const SignIn = () => {
         <Button
           title={"Sign Up"}
           type={ButtonTypes.Primary}
-          onClick={() => {}}
+          onClick={onSignUp}
           className={styles.button}
         />
         <div className={styles.signUpRedirectContainer}>
