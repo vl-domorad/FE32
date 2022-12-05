@@ -1,7 +1,13 @@
 import { takeLatest, all, call, put } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 
-import { registerUser, setLoggedIn, signInUser } from "../Reducers/authReducer";
+import {
+  registerUser,
+  setLoggedIn,
+  setUserData,
+  signInUser,
+  getUserData,
+} from "../Reducers/authReducer";
 import { RegisterUserPayload, SignInUserPayload } from "../Types/auth";
 import API from "../utils/api";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../../Constants/consts";
@@ -27,7 +33,18 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
     yield put(setLoggedIn(true));
     callback();
   } else {
-    console.warn("Error while registering user: ", problem);
+    console.warn("Error while sign in: ", problem);
+  }
+}
+
+function* getUserDataWorker() {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY) || "";
+
+  const { ok, problem, data } = yield call(API.getUserInfo, accessToken);
+  if (ok && data) {
+    yield put(setUserData(data.username));
+  } else {
+    console.warn("Error while getting user info: ", problem);
   }
 }
 
@@ -35,5 +52,6 @@ export default function* authSaga() {
   yield all([
     takeLatest(registerUser, registerUserWorker),
     takeLatest(signInUser, signInUserWorker),
+    takeLatest(getUserData, getUserDataWorker),
   ]);
 }

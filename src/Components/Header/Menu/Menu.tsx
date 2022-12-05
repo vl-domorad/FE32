@@ -12,6 +12,7 @@ import AuthSelectors from "../../../Redux/Selectors/authSelectors";
 
 const Menu = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
+  const username = useSelector(AuthSelectors.getUserName);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -31,7 +32,7 @@ const Menu = () => {
   return (
     <div className={styles.container}>
       <div>
-        {isLoggedIn && <UserName username={"Artem_Malkin"} />}
+        {isLoggedIn && !!username && <UserName username={username} />}
         {navButtons.map(({ link, title }) => {
           return (
             <NavLink
