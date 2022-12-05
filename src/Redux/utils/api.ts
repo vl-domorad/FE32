@@ -1,5 +1,5 @@
 import { create } from "apisauce";
-import { RegisterUserData } from "../Types/auth";
+import { RegisterUserData, SignInUserData } from "../Types/auth";
 
 const API = create({ baseURL: "https://studapi.teachmeskills.by" });
 
@@ -8,10 +8,15 @@ const registerUser = (data: RegisterUserData) => {
 };
 
 const getAllPosts = () => {
-  return API.get("/blog/posts/?limit=11")
-}
+  return API.get("/blog/posts/?limit=11");
+};
+
+const signInUser = (data: SignInUserData) => {
+  return API.post("/auth/jwt/create/", data);
+};
 
 export default {
   registerUser,
   getAllPosts,
+  signInUser,
 };

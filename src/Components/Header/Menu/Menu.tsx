@@ -1,15 +1,17 @@
 import React, { useMemo } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import classNames from "classnames";
 
 import ThemeSwitcher from "../../ThemeSwitcher";
 import Button, { ButtonTypes } from "../../Button";
 import styles from "./Menu.module.css";
 import { PathNames } from "../../../Pages/Router/Router";
-import classNames from "classnames";
 import UserName from "../../UserName";
+import AuthSelectors from "../../../Redux/Selectors/authSelectors";
 
 const Menu = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
