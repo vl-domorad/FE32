@@ -6,11 +6,12 @@ import {
   setLoggedIn,
   setUserData,
   signInUser,
-  getUserData,
+  getUserData, logoutUser,
 } from "../Reducers/authReducer";
 import { RegisterUserPayload, SignInUserPayload } from "../Types/auth";
 import API from "../utils/api";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../../Constants/consts";
+import callCheckingAuth from "./callCheckingAuth";
 
 function* registerUserWorker(action: PayloadAction<RegisterUserPayload>) {
   const { data: registerData, callback } = action.payload;
@@ -38,9 +39,7 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
 }
 
 function* getUserDataWorker() {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY) || "";
-
-  const { ok, problem, data } = yield call(API.getUserInfo, accessToken);
+  const { ok, problem, data } = yield callCheckingAuth(API.getUserInfo);
   if (ok && data) {
     yield put(setUserData(data.username));
   } else {
@@ -48,10 +47,17 @@ function* getUserDataWorker() {
   }
 }
 
+function* logoutUserWorker() {
+  yield put(setLoggedIn(false));
+  localStorage.removeItem(ACCESS_TOKEN_KEY)
+  localStorage.removeItem(REFRESH_TOKEN_KEY)
+}
+
 export default function* authSaga() {
   yield all([
     takeLatest(registerUser, registerUserWorker),
     takeLatest(signInUser, signInUserWorker),
     takeLatest(getUserData, getUserDataWorker),
+    takeLatest(logoutUser, logoutUserWorker),
   ]);
 }

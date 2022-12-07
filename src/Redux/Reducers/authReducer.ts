@@ -20,6 +20,7 @@ const authSlice = createSlice({
     setUserData: (state, action: PayloadAction<string>) => {
       state.userName = action.payload;
     },
+    logoutUser: (state, action: PayloadAction<undefined>) => {}
   },
 });
 export const {
@@ -28,6 +29,7 @@ export const {
   setLoggedIn,
   getUserData,
   setUserData,
+  logoutUser
 } = authSlice.actions;
 
 export default authSlice.reducer;
