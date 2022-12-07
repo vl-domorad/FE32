@@ -18,3 +18,8 @@ export ButtonTypes
 export default Button
 
 Разница у NavLink и Link - у NavLink есть возможность прокинуть className - т.е. NavLink кастомизируемый
+
+https://jwt.io/ - сайт для проверки JWT токенов и что в них за информация
+
+https://lottiefiles.com/search?q=loading&category=animations - сайт для SVG анимашек
+https://www.npmjs.com/package/react-lottie - библиотека для работы с этими анимашками
