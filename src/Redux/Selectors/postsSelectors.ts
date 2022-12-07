@@ -7,4 +7,6 @@ export default {
   getLikedPosts: (state: RootState) => state.postsReducer.likedPosts,
   getDislikedPosts: (state: RootState) => state.postsReducer.dislikedPosts,
   getSavedPosts: (state: RootState) => state.postsReducer.savedPosts,
+  getPostsLoading: (state: RootState) => state.postsReducer.isPostsLoading,
+  getPostsList: (state: RootState) => state.postsReducer.postsList,
 };

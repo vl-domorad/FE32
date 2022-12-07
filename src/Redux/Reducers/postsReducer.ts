@@ -12,6 +12,8 @@ type PostsReducerState = {
   likedPosts: CardsListType;
   dislikedPosts: CardsListType;
   savedPosts: CardsListType;
+  isPostsLoading: boolean;
+  postsList: CardsListType;
 };
 
 const initialState: PostsReducerState = {
@@ -20,6 +22,8 @@ const initialState: PostsReducerState = {
   likedPosts: [],
   dislikedPosts: [],
   savedPosts: [],
+  isPostsLoading: false,
+  postsList: []
 };
 
 //если кладете дальше объект - исходное значение null
@@ -93,7 +97,12 @@ const postsSlice = createSlice({
     },
     //ToDo: дописать типы вместо any
     getPosts: (state, action: PayloadAction<any>) => {},
-    setPosts: (state, action: PayloadAction<any>) => {},
+    setPosts: (state, action: PayloadAction<CardsListType>) => {
+      state.postsList = action.payload
+    },
+    setPostsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isPostsLoading = action.payload;
+    },
   },
 });
 
@@ -103,6 +112,7 @@ export const {
   setLikeStatus,
   getPosts,
   setPosts,
+  setPostsLoading,
 } = postsSlice.actions;
 
 const postsReducer = postsSlice.reducer;

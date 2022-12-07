@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 
 import ThemeSwitcher from "../../ThemeSwitcher";
@@ -9,11 +9,12 @@ import styles from "./Menu.module.css";
 import { PathNames } from "../../../Pages/Router/Router";
 import UserName from "../../UserName";
 import AuthSelectors from "../../../Redux/Selectors/authSelectors";
+import { logoutUser } from "../../../Redux/Reducers/authReducer";
 
 const Menu = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
   const username = useSelector(AuthSelectors.getUserName);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -26,7 +27,11 @@ const Menu = () => {
   );
 
   const onFooterButtonClick = () => {
-    navigate(PathNames.SignIn);
+    if (isLoggedIn) {
+      dispatch(logoutUser());
+    } else {
+      navigate(PathNames.SignIn);
+    }
   };
 
   return (
