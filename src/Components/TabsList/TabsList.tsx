@@ -5,19 +5,19 @@ import styles from "./TabsList.module.css";
 import { useThemeContext } from "../../Context/Theme";
 import { Theme, Tabs } from "../../Constants/@types";
 
-const TABS_NAMES = [
-  { name: "All", key: Tabs.All },
-  { name: "My Favourites", key: Tabs.Favourites },
-  { name: "Popular", key: Tabs.Popular },
-];
-
 type TabProps = {
   activeTab: Tabs;
   onSelectTab: (tab: Tabs) => void;
   disabled?: boolean;
+  tabsList: Array<{ name: string; key: Tabs }>;
 };
 
-const TabsList: FC<TabProps> = ({ disabled, activeTab, onSelectTab }) => {
+const TabsList: FC<TabProps> = ({
+  disabled,
+  activeTab,
+  onSelectTab,
+  tabsList,
+}) => {
   const { theme } = useThemeContext();
 
   return (
@@ -26,7 +26,7 @@ const TabsList: FC<TabProps> = ({ disabled, activeTab, onSelectTab }) => {
         [styles.darkContainer]: theme === Theme.Dark,
       })}
     >
-      {TABS_NAMES.map((tab) => {
+      {tabsList.map((tab) => {
         return (
           <div
             key={tab.key}

@@ -29,4 +29,5 @@ export enum Tabs {
   All = 'all',
   Favourites = 'myFavourites',
   Popular = 'popular',
+  MyPosts = 'myPosts'
 }

@@ -29,6 +29,10 @@ const RegistrationConfirmation = () => {
   return <div>{state?.email || ""}</div>;
 };
 
+const MockPage = () => {
+  return <div>{"Mock Page"}</div>;
+};
+
 const Router = () => {
   const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
   const dispatch = useDispatch();
@@ -45,6 +49,12 @@ const Router = () => {
         <Route path={PathNames.Home} element={<PagesWrapper />}>
           <Route path={PathNames.SignIn} element={<SignIn />} />
           <Route path={PathNames.SignUp} element={<SignUp />} />
+          <Route
+            path={PathNames.AddPost}
+            element={
+              isLoggedIn ? <MockPage /> : <Navigate to={PathNames.SignIn} />
+            }
+          />
           <Route
             path={PathNames.RegistrationConfirmation}
             element={<RegistrationConfirmation />}

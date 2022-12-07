@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 
 import CardsList from "../../Components/CardsList";
@@ -7,6 +7,7 @@ import TabsList from "../../Components/TabsList";
 import PostsSelectors from "../../Redux/Selectors/postsSelectors";
 import { Tabs } from "../../Constants/@types";
 import styles from "./Home.module.css";
+import AuthSelectors from "../../Redux/Selectors/authSelectors";
 
 const MOCK_CARDS_LIST = [
   {
@@ -129,6 +130,7 @@ const Home = () => {
 
   const likedPosts = useSelector(PostsSelectors.getLikedPosts);
   const savedPosts = useSelector(PostsSelectors.getSavedPosts);
+  const isLoggedIn = useSelector(AuthSelectors.getLoggedIn);
 
   const cardsArray = () => {
     if (activeTab === Tabs.Popular) {
@@ -142,12 +144,29 @@ const Home = () => {
 
   useEffect(() => {
     //ToDo: вместо того экшена, который засовывает посты мокнутые вызвать тот, который их получает из сервера
-  }, [])
+  }, []);
 
+  const TABS_NAMES = useMemo(
+    () => [
+      { name: "All", key: Tabs.All },
+      ...(isLoggedIn
+        ? [
+            { name: "My Posts", key: Tabs.MyPosts },
+            { name: "My Favourites", key: Tabs.Favourites },
+          ]
+        : []),
+      { name: "Popular", key: Tabs.Popular },
+    ],
+    [isLoggedIn]
+  );
   return (
     <div className={styles.container}>
       <div className={styles.pageTitle}>{"Blog"}</div>
-      <TabsList activeTab={activeTab} onSelectTab={onTabClick} />
+      <TabsList
+        activeTab={activeTab}
+        onSelectTab={onTabClick}
+        tabsList={TABS_NAMES}
+      />
       <CardsList cardsList={cardsArray()} />
       <SelectedPostModal />
     </div>
