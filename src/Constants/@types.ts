@@ -26,8 +26,13 @@ export type SetLikeStatusPayload = {
 };
 
 export enum Tabs {
-  All = 'all',
-  Favourites = 'myFavourites',
-  Popular = 'popular',
-  MyPosts = 'myPosts'
+  All = "all",
+  Favourites = "myFavourites",
+  Popular = "popular",
+  MyPosts = "myPosts",
 }
+
+export type AddNewPostPayload = {
+  formData: any;
+  callback: () => void;
+};

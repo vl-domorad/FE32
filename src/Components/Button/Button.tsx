@@ -22,16 +22,10 @@ type ButtonProps = {
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
-  onDefaultClick: () => void
 };
 
-export const withDefaultOnClick = (Component: any) => {
-  return (props: any) => <Component {...props} onDefaultClick={() => alert('From HOC')}  />
-}
-
-
 const Button: FC<ButtonProps> = (props) => {
-  const { type, title, onClick, className, disabled, onDefaultClick } = props;
+  const { type, title, onClick, className, disabled } = props;
 
   const buttonClassName = styles[type];
 
@@ -40,11 +34,11 @@ const Button: FC<ButtonProps> = (props) => {
       className={classnames(styles.button, buttonClassName, className, {
         [styles.disabled]: !!disabled,
       })}
-      onClick={onClick ? onClick : onDefaultClick}
+      onClick={onClick}
     >
       {title}
     </div>
   );
 };
 
-export default withDefaultOnClick(Button);
+export default Button;

@@ -1,0 +1,55 @@
+.container {
+  flex: 1;
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+.pageTitle {
+  font-weight: 700;
+  font-size: 56px;
+  line-height: 80px;
+
+  color: #313037;
+  margin-bottom: 40px;
+}
+.buttonsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.successButtons {
+  display: flex;
+  gap: 24px;
+}
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+.imageDragNDrop {
+  height: 100px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px grey dashed;
+}
+.dragging {
+  background-color: #2231aa;
+  color: white;
+}
+.inputContainer {
+  flex: 1;
+}
+.inputContainer input {
+  width: 100%;
+}
+.imageButtonsContainer {
+  display: flex;
+  gap: 24px;
+}
+.image {
+  width: 300px;
+}

@@ -1,0 +1,45 @@
+.input {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    border: 2px solid transparent;
+    height: 56px;
+    min-width: 544px;
+    padding-left: 16px;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #8d8e97;
+}
+.input:active {
+    outline: none;
+    border-color: transparent;
+}
+
+.input:disabled {
+    background: #e8e8e8;
+    border-radius: 2px;
+}
+
+.inputError {
+    border-color: #fd3419;
+}
+
+.title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 8px;
+}
+
+.textError {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #fd3419;
+}

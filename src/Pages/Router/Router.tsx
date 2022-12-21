@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import SignIn from "../SignIn";
 import SignUp from "../SignUp";
+import PostFormPage from "../PostFormPage";
 import PagesWrapper from "../PagesWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import AuthSelectors from "../../Redux/Selectors/authSelectors";
@@ -27,10 +28,6 @@ export enum PathNames {
 const RegistrationConfirmation = () => {
   const { state } = useLocation();
   return <div>{state?.email || ""}</div>;
-};
-
-const MockPage = () => {
-  return <div>{"Mock Page"}</div>;
 };
 
 const Router = () => {
@@ -52,7 +49,7 @@ const Router = () => {
           <Route
             path={PathNames.AddPost}
             element={
-              isLoggedIn ? <MockPage /> : <Navigate to={PathNames.SignIn} />
+              isLoggedIn ? <PostFormPage /> : <Navigate to={PathNames.SignIn} />
             }
           />
           <Route

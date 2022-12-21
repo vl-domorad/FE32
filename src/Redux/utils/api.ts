@@ -34,6 +34,15 @@ const verifyToken = (token: string) => {
   return API.post("/auth/jwt/verify/", { token });
 };
 
+const addNewPost = (token: string, formData: any) => {
+  return API.post("/blog/posts/", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data'
+    },
+  });
+};
+
 export default {
   registerUser,
   getAllPosts,
@@ -41,4 +50,5 @@ export default {
   getUserInfo,
   getNewAccessToken,
   verifyToken,
+  addNewPost,
 };

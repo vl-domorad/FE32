@@ -30,6 +30,8 @@ const Home = () => {
       return likedPosts;
     } else if (activeTab === Tabs.Favourites) {
       return savedPosts;
+    } else if (activeTab === Tabs.MyPosts) {
+      return [];
     } else {
       return postsList;
     }

@@ -4,6 +4,7 @@ import {
   CardType,
   LikeStatus,
   SetLikeStatusPayload,
+  AddNewPostPayload
 } from "../../Constants/@types";
 
 type PostsReducerState = {
@@ -103,6 +104,7 @@ const postsSlice = createSlice({
     setPostsLoading: (state, action: PayloadAction<boolean>) => {
       state.isPostsLoading = action.payload;
     },
+    addNewPost: (state, action: PayloadAction<AddNewPostPayload>) => {}
   },
 });
 
@@ -113,6 +115,7 @@ export const {
   getPosts,
   setPosts,
   setPostsLoading,
+  addNewPost,
 } = postsSlice.actions;
 
 const postsReducer = postsSlice.reducer;
