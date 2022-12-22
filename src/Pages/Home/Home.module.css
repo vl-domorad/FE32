@@ -1,14 +1,39 @@
 .container {
   flex: 1;
   height: 100%;
-  width: 80%;
   margin: 0 auto;
 }
+
 .pageTitle {
   font-weight: 700;
   font-size: 56px;
   line-height: 80px;
-
   color: #313037;
   margin-bottom: 40px;
+}
+
+.darkPageTitle {
+  color: white;
+}
+
+.activePage {
+  font-weight: 600;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content:space-between;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #313037;
+  cursor: pointer;
+}
+
+.pageNumber {
+  display: flex;
+  gap: 5px;
 }

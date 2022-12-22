@@ -32,7 +32,11 @@ export enum Tabs {
   MyPosts = "myPosts",
 }
 
-export type AddNewPostPayload = {
+export interface IAddNewPostPayload {
   formData: any;
   callback: () => void;
-};
+}
+
+export interface IEditPostPayload extends IAddNewPostPayload {
+  id: string;
+}

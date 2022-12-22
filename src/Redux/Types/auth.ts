@@ -16,3 +16,7 @@ export type SignInUserData = {
 
 export type RegisterUserPayload = GeneralDataWithCallback<RegisterUserData>;
 export type SignInUserPayload = GeneralDataWithCallback<SignInUserData>;
+export type SetUserDataPayload = {
+  userName: string;
+  id: number | null;
+};

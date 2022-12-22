@@ -1,10 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RegisterUserPayload, SignInUserPayload } from "../Types/auth";
+import {
+  RegisterUserPayload,
+  SetUserDataPayload,
+  SignInUserPayload,
+} from "../Types/auth";
 import { ACCESS_TOKEN_KEY } from "../../Constants/consts";
 
-const INITIAL_STATE = {
+type AuthState = {
+  isLoggedIn: boolean
+  userName: string
+  userId: number | null
+}
+
+const INITIAL_STATE: AuthState = {
   isLoggedIn: !!localStorage.getItem(ACCESS_TOKEN_KEY),
   userName: "",
+  userId: null
 };
 
 const authSlice = createSlice({
@@ -17,10 +28,12 @@ const authSlice = createSlice({
       state.isLoggedIn = action.payload;
     },
     getUserData: (state, action: PayloadAction<undefined>) => {},
-    setUserData: (state, action: PayloadAction<string>) => {
-      state.userName = action.payload;
+    setUserData: (state, action: PayloadAction<SetUserDataPayload>) => {
+      const { userName, id } = action.payload;
+      state.userName = userName;
+      state.userId = id;
     },
-    logoutUser: (state, action: PayloadAction<undefined>) => {}
+    logoutUser: (state, action: PayloadAction<undefined>) => {},
   },
 });
 export const {
@@ -29,7 +42,7 @@ export const {
   setLoggedIn,
   getUserData,
   setUserData,
-  logoutUser
+  logoutUser,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,4 +1,5 @@
 import { takeLatest, all, call, put } from "redux-saga/effects";
+import { ApiResponse } from "apisauce";
 import { PayloadAction } from "@reduxjs/toolkit";
 
 import {
@@ -6,7 +7,8 @@ import {
   setLoggedIn,
   setUserData,
   signInUser,
-  getUserData, logoutUser,
+  getUserData,
+  logoutUser,
 } from "../Reducers/authReducer";
 import { RegisterUserPayload, SignInUserPayload } from "../Types/auth";
 import API from "../utils/api";
@@ -39,18 +41,21 @@ function* signInUserWorker(action: PayloadAction<SignInUserPayload>) {
 }
 
 function* getUserDataWorker() {
-  const { ok, problem, data } = yield callCheckingAuth(API.getUserInfo);
-  if (ok && data) {
-    yield put(setUserData(data.username));
+  const response: ApiResponse<any> = yield callCheckingAuth(API.getUserInfo);
+  if (response?.status === 200 && response?.data) {
+    yield put(
+      setUserData({ userName: response?.data.username, id: response?.data.id })
+    );
   } else {
-    console.warn("Error while getting user info: ", problem);
+    console.warn("Error while getting user info: ", response?.problem);
   }
 }
 
 function* logoutUserWorker() {
   yield put(setLoggedIn(false));
-  localStorage.removeItem(ACCESS_TOKEN_KEY)
-  localStorage.removeItem(REFRESH_TOKEN_KEY)
+  yield put(setUserData({ id: null, userName: "" }));
+  localStorage.removeItem(ACCESS_TOKEN_KEY);
+  localStorage.removeItem(REFRESH_TOKEN_KEY);
 }
 
 export default function* authSaga() {

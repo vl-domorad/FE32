@@ -1,24 +1,54 @@
-import React, { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import classNames from "classnames";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Input from "../../Components/Input";
 import Button, { ButtonTypes } from "../../Components/Button";
 
 import styles from "./PostFormPage.module.css";
-import { addNewPost } from "../../Redux/Reducers/postsReducer";
+import {
+  addNewPost,
+  editPost,
+  getSinglePost,
+} from "../../Redux/Reducers/postsReducer";
 import { PathNames } from "../Router/Router";
+import postsSelectors from "../../Redux/Selectors/postsSelectors";
+import AuthSelectors from "../../Redux/Selectors/authSelectors";
 
 const PostFormPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { id } = useParams();
+
+  const card = useSelector(postsSelectors.getSinglePost);
+  const userId = useSelector(AuthSelectors.getUserId);
+
   const [title, setTitle] = useState("");
   const [lessonNumber, setLessonNumber] = useState("");
   const [text, setText] = useState("");
-  const [images, setImages] = React.useState<ImageListType>([]);
+  const [images, setImages] = useState<ImageListType>([]);
+
+  const isEdit = !!id;
+
+  const pageTitle = isEdit ? "Edit Post" : "Add Post";
+
+  useEffect(() => {
+    if (isEdit) {
+      dispatch(getSinglePost(id));
+    }
+  }, [isEdit]);
+
+  useEffect(() => {
+    if (card && isEdit) {
+      setTitle(card.title);
+      setText(card.text);
+      setLessonNumber(card.lesson_num.toString());
+      setImages([{ data_url: card.image }]);
+    }
+  }, [card, isEdit]);
 
   const onCancel = () => {
     navigate("..");
@@ -44,14 +74,25 @@ const PostFormPage = () => {
     formData.append("lesson_num", lessonNumber);
     formData.append("image", images[0].file as Blob);
 
-    dispatch(
-      addNewPost({ formData, callback: () => navigate(PathNames.Home) })
-    );
+    if (isEdit && userId) {
+      formData.append("author", userId.toString());
+      dispatch(
+        editPost({ formData, callback: () => navigate(PathNames.Home), id })
+      );
+    } else {
+      dispatch(
+        addNewPost({ formData, callback: () => navigate(PathNames.Home) })
+      );
+    }
   };
+
+  // if (isEdit && card && card.author !== userId) {
+  //   return <Navigate to={PathNames.SignIn} />;
+  // }
 
   return (
     <div className={styles.container}>
-      <div className={styles.pageTitle}>{"Add Post"}</div>
+      <div className={styles.pageTitle}>{pageTitle}</div>
       <div className={styles.formContainer}>
         <Input
           title={"Title"}
@@ -131,7 +172,7 @@ const PostFormPage = () => {
       </div>
       <div className={styles.buttonsContainer}>
         <Button
-          disabled
+          disabled={!isEdit}
           type={ButtonTypes.Error}
           onClick={() => {}}
           title={"Delete Post"}
@@ -146,7 +187,7 @@ const PostFormPage = () => {
             type={ButtonTypes.Primary}
             disabled={!isValid}
             onClick={onSave}
-            title={"Add Post"}
+            title={isEdit ? "Save" : "Add"}
           />
         </div>
       </div>

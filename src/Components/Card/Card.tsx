@@ -15,6 +15,7 @@ import {
   setSelectedPost,
 } from "../../Redux/Reducers/postsReducer";
 import PostsSelectors from "../../Redux/Selectors/postsSelectors";
+import { useNavigate } from "react-router-dom";
 
 export enum CardSize {
   Large = "large",
@@ -28,9 +29,10 @@ type CardProps = {
 };
 
 const Card: FC<CardProps> = ({ card, size }) => {
-  const { title, text, image, date } = card;
+  const { title, text, image, date, id } = card;
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const likedPosts = useSelector(PostsSelectors.getLikedPosts);
   const dislikedPosts = useSelector(PostsSelectors.getDislikedPosts);
@@ -48,6 +50,10 @@ const Card: FC<CardProps> = ({ card, size }) => {
 
   const onStatusClick = (likeStatus: LikeStatus) => () => {
     dispatch(setLikeStatus({ card, likeStatus }));
+  };
+
+  const onTitleClick = () => {
+    navigate(`content/${id}`);
   };
 
   return (
@@ -70,6 +76,7 @@ const Card: FC<CardProps> = ({ card, size }) => {
               className={classNames(styles.title, {
                 [styles.smallTitle]: !isLarge,
               })}
+              onClick={onTitleClick}
             >
               {title}
             </div>

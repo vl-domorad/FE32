@@ -1,14 +1,11 @@
 import { create } from "apisauce";
 import { RegisterUserData, SignInUserData } from "../Types/auth";
+import { PER_PAGE } from "../../Constants/consts";
 
 const API = create({ baseURL: "https://studapi.teachmeskills.by" });
 
 const registerUser = (data: RegisterUserData) => {
   return API.post("/auth/users/", data);
-};
-
-const getAllPosts = () => {
-  return API.get("/blog/posts/?limit=11");
 };
 
 const signInUser = (data: SignInUserData) => {
@@ -38,7 +35,24 @@ const addNewPost = (token: string, formData: any) => {
   return API.post("/blog/posts/", formData, {
     headers: {
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'multipart/form-data'
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+const getAllPosts = (offset: number, search?: string) => {
+  return API.get("/blog/posts/", { limit: PER_PAGE, offset, search });
+};
+
+const getSinglePost = (id: string) => {
+  return API.get(`/blog/posts/${id}/`);
+};
+
+const editPost = (token: string, formData: any, id: string) => {
+  return API.put(`/blog/posts/${id}/`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     },
   });
 };
@@ -51,4 +65,6 @@ export default {
   getNewAccessToken,
   verifyToken,
   addNewPost,
+  getSinglePost,
+  editPost,
 };

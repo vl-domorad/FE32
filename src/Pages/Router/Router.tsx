@@ -14,6 +14,7 @@ import PagesWrapper from "../PagesWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import AuthSelectors from "../../Redux/Selectors/authSelectors";
 import { getUserData } from "../../Redux/Reducers/authReducer";
+import ContentPage from "../ContentPage";
 
 export enum PathNames {
   Home = "/",
@@ -21,6 +22,8 @@ export enum PathNames {
   SignUp = "/sign-up",
   AddPost = "/posts/add",
   RegistrationConfirmation = "/sign-up/confirm",
+  ContentPage = "/content/:id",
+  EditPost = "/content/:id/edit",
   RegistrationSuccess = "/sign-up/success",
   Search = "/search",
 }
@@ -46,8 +49,15 @@ const Router = () => {
         <Route path={PathNames.Home} element={<PagesWrapper />}>
           <Route path={PathNames.SignIn} element={<SignIn />} />
           <Route path={PathNames.SignUp} element={<SignUp />} />
+          <Route path={PathNames.ContentPage} element={<ContentPage />} />
           <Route
             path={PathNames.AddPost}
+            element={
+              isLoggedIn ? <PostFormPage /> : <Navigate to={PathNames.SignIn} />
+            }
+          />
+          <Route
+            path={PathNames.EditPost}
             element={
               isLoggedIn ? <PostFormPage /> : <Navigate to={PathNames.SignIn} />
             }

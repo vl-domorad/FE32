@@ -1,0 +1,61 @@
+.container {
+    max-width: 1120px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 300px;
+    gap: 48px;
+}
+
+.homeLink:hover {
+    cursor: pointer;
+    color: #2231aa;
+}
+
+.headerContainer {
+    display: flex;
+    gap: 8px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.post {
+    color: #8d8e97;
+}
+
+.title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 56px;
+    line-height: 80px;
+}
+
+.image {
+    width: 992px;
+    max-height: 518px;
+    align-self: center;
+}
+
+.description {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 32px;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 72px;
+    border-bottom: 1px solid #DADADA;
+}
+
+.likeContainer{
+  display: flex;
+  gap: 6px;
+}
+

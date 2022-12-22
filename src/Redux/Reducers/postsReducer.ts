@@ -2,9 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   CardsListType,
   CardType,
+  IAddNewPostPayload,
+  IEditPostPayload,
   LikeStatus,
   SetLikeStatusPayload,
-  AddNewPostPayload
 } from "../../Constants/@types";
 
 type PostsReducerState = {
@@ -13,8 +14,11 @@ type PostsReducerState = {
   likedPosts: CardsListType;
   dislikedPosts: CardsListType;
   savedPosts: CardsListType;
-  isPostsLoading: boolean;
-  postsList: CardsListType;
+  allPosts: CardsListType;
+  searchedPosts: CardsListType;
+  singlePost: CardType | null;
+  totalCount: number;
+  searchedTotalCount: number;
 };
 
 const initialState: PostsReducerState = {
@@ -23,15 +27,12 @@ const initialState: PostsReducerState = {
   likedPosts: [],
   dislikedPosts: [],
   savedPosts: [],
-  isPostsLoading: false,
-  postsList: []
+  allPosts: [],
+  searchedPosts: [],
+  singlePost: null,
+  totalCount: 0,
+  searchedTotalCount: 0,
 };
-
-//если кладете дальше объект - исходное значение null
-//если кладете массив  - []
-//если кладете число - 0
-//boolean - false
-//string - ''
 
 const postsSlice = createSlice({
   name: "postsReducer",
@@ -41,12 +42,14 @@ const postsSlice = createSlice({
       state.selectedPost = action.payload;
       state.isSelectedPostModalOpened = true;
     },
+
     setSelectedPostModalVisible: (state, action: PayloadAction<boolean>) => {
       state.isSelectedPostModalOpened = action.payload;
       if (!action.payload) {
         state.selectedPost = null;
       }
     },
+
     setLikeStatus: (state, action: PayloadAction<SetLikeStatusPayload>) => {
       const { card, likeStatus } = action.payload;
 
@@ -72,39 +75,40 @@ const postsSlice = createSlice({
       if (secondaryIndex > -1) {
         state[secondaryArrayKey].splice(secondaryIndex, 1);
       }
-      // верхний if else подробно описан ниже
-      // if (likeStatus === LikeStatus.Like) {
-      //   // if LikeStatus === 'LIKE'
-      //   if (likedIndex === -1) { // Здесь определяем, ставим или снимаем лайк с поста
-      //     state.likedPosts.push(card);
-      //   } else {
-      //     state.likedPosts.splice(likedIndex, 1);
-      //   }
-      //   if (dislikedIndex > -1) { // Здесь определяем, ставили ли мы на этот пост дизлайк
-      //     state.dislikedPosts.splice(dislikedIndex, 1);
-      //   }
-      // } else {
-      //   // if LikeStatus === 'DISLIKE'
-      //   if (dislikedIndex === -1) { // Здесь определяем, ставим или снимаем дизлайк с поста
-      //     state.dislikedPosts.push(card);
-      //   } else {
-      //     state.dislikedPosts.splice(dislikedIndex, 1);
-      //   }
-      //
-      //   if (likedIndex > -1) {  // Здесь определяем, ставили ли мы на этот пост лайк
-      //     state.likedPosts.splice(likedIndex, 1);
-      //   }
-      // }
     },
-    //ToDo: дописать типы вместо any
-    getPosts: (state, action: PayloadAction<any>) => {},
+
+    setSavedPosts: (state, action: PayloadAction<CardType>) => {
+      const card = action.payload;
+
+      const SavedPostsIndex = state.savedPosts.findIndex(
+        (post) => post.id === card.id
+      );
+
+      if (SavedPostsIndex === -1) {
+        state.savedPosts.push(card);
+      } else {
+        state.savedPosts.splice(SavedPostsIndex, 1);
+      }
+    },
+
+    getPosts: (state, action: PayloadAction<number>) => {},
     setPosts: (state, action: PayloadAction<CardsListType>) => {
-      state.postsList = action.payload
+      state.allPosts = action.payload;
     },
-    setPostsLoading: (state, action: PayloadAction<boolean>) => {
-      state.isPostsLoading = action.payload;
+
+    getSinglePost: (state, action: PayloadAction<string>) => {},
+    setSinglePost: (state, action: PayloadAction<CardType>) => {
+      state.singlePost = action.payload;
     },
-    addNewPost: (state, action: PayloadAction<AddNewPostPayload>) => {}
+
+    setTotalCount: (state, action: PayloadAction<number>) => {
+      state.totalCount = action.payload;
+    },
+    setSearchedPostsCount: (state, action: PayloadAction<number>) => {
+      state.searchedTotalCount = action.payload;
+    },
+    addNewPost: (state, action: PayloadAction<IAddNewPostPayload>) => {},
+    editPost: (state, action: PayloadAction<IEditPostPayload>) => {},
   },
 });
 
@@ -114,8 +118,13 @@ export const {
   setLikeStatus,
   getPosts,
   setPosts,
-  setPostsLoading,
+  getSinglePost,
+  setSinglePost,
+  setTotalCount,
   addNewPost,
+  editPost,
+  setSavedPosts,
+  setSearchedPostsCount,
 } = postsSlice.actions;
 
 const postsReducer = postsSlice.reducer;
