@@ -14,7 +14,12 @@ import {
 
 import API from "../utils/api";
 import callCheckingAuth from "./callCheckingAuth";
-import {IAddNewPostPayload, IDeletePostPayload, IEditPostPayload} from "../../Constants/@types";
+import {
+  IAddNewPostPayload,
+  IDeletePostPayload,
+  IEditPostPayload,
+} from "../../Constants/@types";
+import { toast } from "react-toastify";
 
 function* getPostsWorker(action: PayloadAction<number>) {
   const { ok, data, problem } = yield call(API.getAllPosts, action.payload);
@@ -23,35 +28,39 @@ function* getPostsWorker(action: PayloadAction<number>) {
     yield put(setTotalCount(data.count));
   } else {
     console.warn("Error fetching posts: ", problem);
+    toast.error("Error fetching posts");
   }
 }
 
 function* addNewPostWorker(action: PayloadAction<IAddNewPostPayload>) {
   const { callback, formData } = action.payload;
-  const { ok, problem } = yield callCheckingAuth(API.addNewPost, formData);
+  const { ok } = yield callCheckingAuth(API.addNewPost, formData);
   if (ok) {
     callback();
+    toast.success("Post added successfully");
   } else {
-    console.warn("Error adding new post", problem);
+    toast.error("Error adding new post");
   }
 }
 function* editPostWorker(action: PayloadAction<IEditPostPayload>) {
   const { callback, formData, id } = action.payload;
-  const { ok, problem } = yield callCheckingAuth(API.editPost, formData, id);
+  const { ok } = yield callCheckingAuth(API.editPost, formData, id);
   if (ok) {
     callback();
+    toast.success("Post edited successfully");
   } else {
-    console.warn("Error editing post", problem);
+    toast.error("Error editing post");
   }
 }
 
 function* deletePostWorker(action: PayloadAction<IDeletePostPayload>) {
   const { callback, id } = action.payload;
-  const { ok, problem } = yield callCheckingAuth(API.deletePost, id);
+  const { ok } = yield callCheckingAuth(API.deletePost, id);
   if (ok) {
     callback();
+    toast.success("Post deleted successfully");
   } else {
-    console.warn("Error deleting post", problem);
+    toast.error("Error deleting post");
   }
 }
 
@@ -60,6 +69,7 @@ function* getSinglePostWorker(action: PayloadAction<string>) {
   if (ok && data) {
     yield put(setSinglePost(data));
   } else {
+    toast.error("Error fetching post");
     console.warn("Error fetching single post: ", problem);
   }
 }

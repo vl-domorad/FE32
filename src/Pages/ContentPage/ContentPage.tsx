@@ -13,7 +13,6 @@ import styles from "./ContentPage.module.css";
 import AuthSelectors from "../../Redux/Selectors/authSelectors";
 
 const ContentPage = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = useParams();
@@ -29,14 +28,20 @@ const ContentPage = () => {
   const userId = useSelector(AuthSelectors.getUserId);
 
   const onEditPost = () => {
-      navigate(`/content/${id}/edit`)
-  }
+    navigate(`/content/${id}/edit`);
+  };
+
+  const navigateHome = () => {
+    navigate(PathNames.Home);
+  };
 
   return card ? (
     <div className={styles.container}>
       <div>
         <div className={styles.headerContainer}>
-          <div className={styles.homeLink}>{"Home"}</div>
+          <div className={styles.homeLink} onClick={navigateHome}>
+            {"Home"}
+          </div>
           <span>|</span>
           <div className={styles.post}>{"Post 14278"}</div>
         </div>
@@ -53,7 +58,11 @@ const ContentPage = () => {
       <div className={styles.buttonContainer}>
         <div className={styles.likeContainer}>
           {card.author === userId && (
-            <Button title={"EditPost"} type={ButtonTypes.Primary} onClick={onEditPost}/>
+            <Button
+              title={"EditPost"}
+              type={ButtonTypes.Primary}
+              onClick={onEditPost}
+            />
           )}
           <Button title={<LikeIcon />} type={ButtonTypes.Secondary} />
           <Button title={<DislikeIcon />} type={ButtonTypes.Secondary} />

@@ -4,6 +4,7 @@ import { ApiResponse } from "apisauce";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../../Constants/consts";
 import API from "../utils/api";
 import { logoutUser } from "../Reducers/authReducer";
+import { toast } from "react-toastify";
 
 type AnyResponse = ApiResponse<any>;
 
@@ -28,17 +29,23 @@ export default function* callCheckingAuth(api: any, ...rest: any) {
         const { ok, data } = yield call(API.getNewAccessToken, refreshToken); // получаем новый accessToken
         if (ok && data) {
           //если все хорошо и токен пришел
-          const { access: newAccessToken } = data
+          const { access: newAccessToken } = data;
           localStorage.setItem(ACCESS_TOKEN_KEY, newAccessToken); //сетаем новое значение токена
-          const newResponse: AnyResponse = yield call(api, newAccessToken, ...rest); // делаем запрос с НОВЫМ значением токена
+          const newResponse: AnyResponse = yield call(
+            api,
+            newAccessToken,
+            ...rest
+          ); // делаем запрос с НОВЫМ значением токена
           return newResponse; //ОБЯЗАТЕЛЬНО возвращаем его пользователю
         } else {
           // если совсем все плохо - просто выносим пользователя из приложения - пускай перезаходит сам
           yield put(logoutUser());
+          toast.error("Your session has expired, please log in");
         }
       } else {
         //если умер и refreshToken - выкидываем пользователя из приложения
         yield put(logoutUser());
+        toast.error("Your session has expired, please log in");
       }
     } else {
       return response; // c токеном все хорошо, надо искать ошибку в другом месте

@@ -20,7 +20,7 @@ const Header = () => {
         type={ButtonTypes.Primary}
         className={styles.burgerButton}
       />
-      {isOpened && <Menu />}
+      {isOpened && <Menu onClose={onBurgerClick} />}
     </div>
   );
 };
