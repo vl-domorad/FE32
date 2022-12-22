@@ -40,3 +40,5 @@ export interface IAddNewPostPayload {
 export interface IEditPostPayload extends IAddNewPostPayload {
   id: string;
 }
+
+export interface IDeletePostPayload extends Omit<IEditPostPayload, "formData"> {}

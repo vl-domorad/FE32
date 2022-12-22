@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   CardsListType,
   CardType,
-  IAddNewPostPayload,
+  IAddNewPostPayload, IDeletePostPayload,
   IEditPostPayload,
   LikeStatus,
   SetLikeStatusPayload,
@@ -109,6 +109,7 @@ const postsSlice = createSlice({
     },
     addNewPost: (state, action: PayloadAction<IAddNewPostPayload>) => {},
     editPost: (state, action: PayloadAction<IEditPostPayload>) => {},
+    deletePost: (state, action: PayloadAction<IDeletePostPayload>) => {},
   },
 });
 
@@ -123,6 +124,7 @@ export const {
   setTotalCount,
   addNewPost,
   editPost,
+  deletePost,
   setSavedPosts,
   setSearchedPostsCount,
 } = postsSlice.actions;
